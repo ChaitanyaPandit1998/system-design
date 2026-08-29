@@ -44,6 +44,7 @@ image.
 ```bash
 npm run build    # production build, output in dist/
 npm run preview  # serve the production build locally
+npm run lint     # ESLint over src/
 ```
 
 To read the underlying design write-ups without running anything, just open the

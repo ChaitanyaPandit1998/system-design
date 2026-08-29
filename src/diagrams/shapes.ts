@@ -1,0 +1,134 @@
+import { createShapeId, toRichText, type Editor, type TLShapeId } from "tldraw";
+
+export const BLACK = "black" as const;
+export const ACCENT = "violet" as const;
+
+export function rect(
+  id: TLShapeId,
+  x: number,
+  y: number,
+  w: number,
+  h: number,
+  text: string,
+  opts?: {
+    align?: "start" | "middle" | "end";
+    verticalAlign?: "start" | "middle" | "end";
+    color?: typeof BLACK | typeof ACCENT;
+    size?: "s" | "m";
+  }
+) {
+  return {
+    id,
+    type: "geo" as const,
+    x,
+    y,
+    props: {
+      w,
+      h,
+      geo: "rectangle" as const,
+      richText: toRichText(text),
+      color: opts?.color ?? BLACK,
+      fill: "none" as const,
+      size: opts?.size ?? "s",
+      font: "draw" as const,
+      align: opts?.align ?? "middle",
+      verticalAlign: opts?.verticalAlign ?? "middle",
+    },
+  };
+}
+
+export function ellipse(id: TLShapeId, x: number, y: number, w: number, h: number, text: string) {
+  return {
+    id,
+    type: "geo" as const,
+    x,
+    y,
+    props: {
+      w,
+      h,
+      geo: "ellipse" as const,
+      richText: toRichText(text),
+      color: BLACK,
+      fill: "none" as const,
+      size: "s" as const,
+      font: "draw" as const,
+      align: "middle" as const,
+      verticalAlign: "middle" as const,
+    },
+  };
+}
+
+export function seg(
+  id: TLShapeId,
+  x1: number,
+  y1: number,
+  x2: number,
+  y2: number,
+  opts?: {
+    text?: string;
+    arrowStart?: "none" | "arrow";
+    arrowEnd?: "none" | "arrow";
+    color?: typeof BLACK | typeof ACCENT;
+    dash?: "draw" | "solid" | "dashed" | "dotted";
+  }
+) {
+  return {
+    id,
+    type: "arrow" as const,
+    x: x1,
+    y: y1,
+    props: {
+      start: { x: 0, y: 0 },
+      end: { x: x2 - x1, y: y2 - y1 },
+      arrowheadStart: opts?.arrowStart ?? "none",
+      arrowheadEnd: opts?.arrowEnd ?? "arrow",
+      richText: toRichText(opts?.text ?? ""),
+      color: opts?.color ?? BLACK,
+      dash: opts?.dash ?? "draw",
+      size: "s" as const,
+      font: "draw" as const,
+      bend: 0,
+    },
+  };
+}
+
+export function textBlock(id: TLShapeId, x: number, y: number, w: number, text: string) {
+  return {
+    id,
+    type: "text" as const,
+    x,
+    y,
+    props: {
+      w,
+      richText: toRichText(text),
+      color: BLACK,
+      size: "m" as const,
+      font: "draw" as const,
+      textAlign: "start" as const,
+      autoSize: false,
+      scale: 1,
+    },
+  };
+}
+
+// A requirements panel placed well clear of every diagram (far negative x),
+// in the same functional/non-functional-requirements format used across the
+// docs in docs/.
+export function requirementsPanel(
+  editor: Editor,
+  title: string,
+  functional: string[],
+  nonFunctional: string[]
+) {
+  const lines = [
+    title,
+    "",
+    "Functional Requirements",
+    ...functional.map((line) => `· ${line}`),
+    "",
+    "Non-Functional Requirements",
+    ...nonFunctional.map((line) => `· ${line}`),
+  ].join("\n");
+
+  editor.createShapes([textBlock(createShapeId(), -900, 60, 700, lines)]);
+}

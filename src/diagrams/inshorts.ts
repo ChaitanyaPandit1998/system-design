@@ -1,11 +1,11 @@
 import { createShapeId, type Editor } from "tldraw";
-import { ACCENT, rect, requirementsPanel, seg } from "./shapes";
+import { ACCENT, rect, requirementsPanel, seg, summaryPanel } from "./shapes";
 
 // Page: Inshorts News Feed — feed/search services, cache-aside reads,
 // queue-buffered publishing, CDC-synced search index
 // (following docs/inshorts-news-feed-system-design.md)
 
-export const VERSION = 1;
+export const VERSION = 2;
 
 export function build(editor: Editor) {
   const id = () => createShapeId();
@@ -98,6 +98,12 @@ export function build(editor: Editor) {
       "High availability — Availability > Consistency (AP over CP)",
     ]
   );
+
+  summaryPanel(editor, "How it works — Inshorts News Feed", [
+    "Readers hit the Feed Service through a Redis cache-aside layer for the latest/most-read articles, so the hot read path rarely touches the primary DB — which is what keeps list/read latency under the 1-second requirement.",
+    "Authors publish through the same Feed Service, but the write goes onto Rabbit MQ instead of hitting the DB synchronously, so a burst of breaking-news publishes doesn't back up either the write or the read path.",
+    "A CDC pipeline (Debezium + Kafka) streams primary-DB changes into Elasticsearch asynchronously, so the Search Service always has a reasonably fresh, eventually-consistent index without being coupled to the write path.",
+  ]);
 
   editor.zoomToFit();
 }

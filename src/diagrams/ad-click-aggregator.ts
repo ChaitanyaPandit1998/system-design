@@ -1,5 +1,5 @@
 import { createShapeId, type Editor } from "tldraw";
-import { ACCENT, ellipse, rect, requirementsPanel, seg } from "./shapes";
+import { ACCENT, ellipse, rect, requirementsPanel, seg, summaryPanel } from "./shapes";
 
 // Page: Ad Click Aggregator — lambda architecture (real-time + batch)
 // (following docs/ad-click-aggregator-system-design.md)
@@ -8,7 +8,7 @@ import { ACCENT, ellipse, rect, requirementsPanel, seg } from "./shapes";
 // arrow labels, and event-driven branches (Kafka -> Flink / S3) routed so
 // they never cross a box.
 
-export const VERSION = 1;
+export const VERSION = 2;
 
 export function build(editor: Editor) {
   const id = () => createShapeId();
@@ -131,6 +131,13 @@ export function build(editor: Editor) {
       "Scalability — handle traffic spikes (10,000+ clicks/sec)",
     ]
   );
+
+  summaryPanel(editor, "How it works — Ad Click Aggregator", [
+    "The Ad Placement Service serves an ad and stashes a unique impression ID in Redis; a click is only accepted if that ID is present and unused, which is what prevents duplicate/double counting.",
+    "Accepted clicks are published to Kafka, which two independent consumer groups drain in parallel: Flink aggregates counts into 1-minute windows and writes them to the OLAP DB for fast advertiser queries, while a separate consumer archives the raw event to S3.",
+    "This is a lambda architecture: the real-time path (Flink) trades some accuracy for speed, and a scheduled Spark job reprocesses the raw S3 archive in batch, comparing it against the OLAP DB and correcting any discrepancies.",
+    "Advertisers query the Analytics Service, which reads only from the OLAP DB — never the raw stream — so query latency stays independent of ingestion volume.",
+  ]);
 
   editor.zoomToFit();
 }

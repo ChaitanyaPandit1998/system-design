@@ -132,3 +132,12 @@ export function requirementsPanel(
 
   editor.createShapes([textBlock(createShapeId(), -900, 60, 700, lines)]);
 }
+
+// A short prose summary of how the system works end-to-end, placed below the
+// requirements panel in the same far-left column (clear of the requirements
+// text — the longest requirements panel is well under 800px tall).
+export function summaryPanel(editor: Editor, title: string, paragraphs: string[]) {
+  const lines = [title, "", ...paragraphs].join("\n\n");
+
+  editor.createShapes([textBlock(createShapeId(), -900, 800, 700, lines)]);
+}

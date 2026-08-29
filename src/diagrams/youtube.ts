@@ -1,10 +1,10 @@
 import { createShapeId, type Editor } from "tldraw";
-import { ACCENT, ellipse, rect, requirementsPanel, seg } from "./shapes";
+import { ACCENT, ellipse, rect, requirementsPanel, seg, summaryPanel } from "./shapes";
 
 // Page: YouTube — upload/processing pipeline + streaming path
 // (following docs/youtube-system-design.md)
 
-export const VERSION = 3;
+export const VERSION = 4;
 
 export function build(editor: Editor) {
   const id = () => createShapeId();
@@ -133,6 +133,13 @@ export function build(editor: Editor) {
       "Loose coupling — upload and processing pipelines scale independently (event-driven)",
     ]
   );
+
+  summaryPanel(editor, "How it works — YouTube", [
+    "The client asks the Video Service for a presigned URL and uploads the raw file directly to S3, bypassing the Gateway and app servers entirely.",
+    "S3 fires an event notification that triggers the Upload Monitor (Lambda), which kicks off the Video Processing Service — splitting the video, transcoding in parallel to multiple resolutions, extracting audio, generating a transcript, and building the HLS/DASH manifest.",
+    "Processed segments and manifests are written back to S3, and the Video Metadata DB is updated with the resulting S3 URLs and a status of ready.",
+    "On playback, the client streams segments through the CDN (falling back to S3 on a cache miss), switching resolution based on the manifest for adaptive bitrate streaming.",
+  ]);
 
   editor.zoomToFit();
 }

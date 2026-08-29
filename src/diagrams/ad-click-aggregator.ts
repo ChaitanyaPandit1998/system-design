@@ -8,7 +8,7 @@ import { ACCENT, ellipse, rect, requirementsPanel, seg, summaryPanel } from "./s
 // arrow labels, and event-driven branches (Kafka -> Flink / S3) routed so
 // they never cross a box.
 
-export const VERSION = 3;
+export const VERSION = 4;
 
 export function build(editor: Editor) {
   const id = () => createShapeId();

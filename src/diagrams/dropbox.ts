@@ -5,7 +5,7 @@ import { ellipse, rect, requirementsPanel, seg, summaryPanel } from "./shapes";
 
 // bump when this builder changes shape, to force a rebuild of a
 // previously-persisted page instead of silently keeping the stale layout
-export const VERSION = 4;
+export const VERSION = 5;
 
 export function build(editor: Editor) {
   const id = () => createShapeId();

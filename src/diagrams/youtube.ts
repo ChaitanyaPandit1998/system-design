@@ -4,7 +4,7 @@ import { ACCENT, ellipse, rect, requirementsPanel, seg, summaryPanel } from "./s
 // Page: YouTube — upload/processing pipeline + streaming path
 // (following docs/youtube-system-design.md)
 
-export const VERSION = 5;
+export const VERSION = 6;
 
 export function build(editor: Editor) {
   const id = () => createShapeId();

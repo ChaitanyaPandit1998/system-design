@@ -8,7 +8,7 @@ import { ACCENT, rect, requirementsPanel, seg, summaryPanel } from "./shapes";
 // wide gutters so arrow labels never have to share space with a box or
 // another label.
 
-export const VERSION = 6;
+export const VERSION = 7;
 
 export function build(editor: Editor) {
   const id = () => createShapeId();

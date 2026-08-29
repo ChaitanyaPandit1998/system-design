@@ -114,12 +114,40 @@ export function textBlock(id: TLShapeId, x: number, y: number, w: number, text: 
 const SIDE_PANEL_X = -900;
 const SIDE_PANEL_W = 700;
 const SIDE_PANEL_GAP = 80; // vertical gap between stacked side panels
+const SIDE_PANEL_PADDING = 32; // border inset around the text inside a panel
+
+// A block of text with a border drawn around its actual rendered size (read
+// back via getShapePageBounds after creating the text), so the panel reads
+// as a distinct card instead of floating text. The border has no fill, so
+// it never needs to be z-ordered behind the text. Returns the border
+// shape's id — used to position whatever panel is stacked below it.
+function borderedTextPanel(editor: Editor, x: number, y: number, w: number, text: string): TLShapeId {
+  const textId = createShapeId();
+  editor.createShapes([textBlock(textId, x, y, w, text)]);
+
+  const bounds = editor.getShapePageBounds(textId);
+  const pad = SIDE_PANEL_PADDING;
+  const borderId = createShapeId();
+  editor.createShapes([
+    rect(
+      borderId,
+      (bounds?.minX ?? x) - pad,
+      (bounds?.minY ?? y) - pad,
+      (bounds?.width ?? w) + pad * 2,
+      (bounds?.height ?? 0) + pad * 2,
+      "",
+      { size: "m" }
+    ),
+  ]);
+
+  return borderId;
+}
 
 // A requirements panel placed well clear of every diagram (far negative x),
 // in the same functional/non-functional-requirements format used across the
-// docs in docs/. Returns the shape id so a panel stacked below it (see
-// summaryPanel) can be positioned from its *actual* rendered height instead
-// of a guessed offset.
+// docs in docs/. Returns the border shape's id so a panel stacked below it
+// (see summaryPanel) can be positioned from its *actual* rendered height
+// instead of a guessed offset.
 export function requirementsPanel(
   editor: Editor,
   title: string,
@@ -136,21 +164,19 @@ export function requirementsPanel(
     ...nonFunctional.map((line) => `· ${line}`),
   ].join("\n");
 
-  const id = createShapeId();
-  editor.createShapes([textBlock(id, SIDE_PANEL_X, 60, SIDE_PANEL_W, lines)]);
-  return id;
+  return borderedTextPanel(editor, SIDE_PANEL_X, 60, SIDE_PANEL_W, lines);
 }
 
 // A short prose summary of how the system works end-to-end, stacked below
-// `after` (typically the requirementsPanel's shape id) in the same far-left
-// column. Reads `after`'s actual page bounds via the editor rather than
-// guessing a fixed offset, so it can never overlap regardless of how long
-// the panel above it ends up being.
+// `after` (typically the requirementsPanel's returned id) in the same
+// far-left column. Reads `after`'s actual page bounds via the editor rather
+// than guessing a fixed offset, so it can never overlap regardless of how
+// long the panel above it ends up being.
 export function summaryPanel(editor: Editor, after: TLShapeId, title: string, paragraphs: string[]) {
   const lines = [title, "", ...paragraphs].join("\n\n");
 
   const aboveBounds = editor.getShapePageBounds(after);
   const y = (aboveBounds?.maxY ?? 60) + SIDE_PANEL_GAP;
 
-  editor.createShapes([textBlock(createShapeId(), SIDE_PANEL_X, y, SIDE_PANEL_W, lines)]);
+  borderedTextPanel(editor, SIDE_PANEL_X, y, SIDE_PANEL_W, lines);
 }

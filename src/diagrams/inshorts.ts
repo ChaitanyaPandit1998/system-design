@@ -5,7 +5,7 @@ import { ACCENT, rect, requirementsPanel, seg, summaryPanel } from "./shapes";
 // queue-buffered publishing, CDC-synced search index
 // (following docs/inshorts-news-feed-system-design.md)
 
-export const VERSION = 3;
+export const VERSION = 4;
 
 export function build(editor: Editor) {
   const id = () => createShapeId();

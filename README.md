@@ -45,6 +45,7 @@ image.
 npm run build    # production build, output in dist/
 npm run preview  # serve the production build locally
 npm run lint     # ESLint over src/
+npm run test     # validate every diagram's generated shapes against tldraw's schema
 ```
 
 To read the underlying design write-ups without running anything, just open the
@@ -70,6 +71,12 @@ screenshot where one exists.
 - tldraw shape labels use a `richText` prop (TipTap document), not plain `text` —
   see the `toRichText()` calls in `src/diagrams/shapes.ts` if you're adding new
   shapes by hand.
+- `src/diagrams/pages.test.ts` runs every page's `build()` against a fake editor
+  and validates the resulting shapes against tldraw's real per-shape-type
+  validators (`geoShapeProps`, `arrowShapeProps`, `textShapeProps`) — no DOM or
+  full Editor instance needed. This is what would have caught the `richText` vs
+  `text` mistake above at test time instead of in the browser; run it (or add a
+  case to it) after editing any `build()` function.
 - Layout tip learned the hard way: give rows/columns generous gutters (200px+)
   and keep arrow labels short — cramped spacing is what caused most of the
   readability issues fixed along the way.

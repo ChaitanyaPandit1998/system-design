@@ -1,5 +1,7 @@
 import type { Editor, TLPageId } from "tldraw";
+import * as adClickAggregator from "./ad-click-aggregator";
 import * as dropbox from "./dropbox";
+import * as inshorts from "./inshorts";
 import * as ticketmaster from "./ticketmaster";
 import * as youtube from "./youtube";
 
@@ -17,6 +19,8 @@ export const FIRST_PAGE: DiagramPage = { name: "DropBox", version: dropbox.VERSI
 export const OTHER_PAGES: DiagramPage[] = [
   { name: "Ticketmaster", version: ticketmaster.VERSION, build: ticketmaster.build },
   { name: "YouTube", version: youtube.VERSION, build: youtube.build },
+  { name: "Ad Click Aggregator", version: adClickAggregator.VERSION, build: adClickAggregator.build },
+  { name: "Inshorts", version: inshorts.VERSION, build: inshorts.build },
 ];
 
 function ensurePage(editor: Editor, pageId: TLPageId, version: number, build: (editor: Editor) => void) {

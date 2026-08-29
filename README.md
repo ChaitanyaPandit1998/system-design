@@ -25,12 +25,13 @@ into an editable whiteboard.
     number and a `build(editor)` function
   - `src/diagrams/pages.ts` — seeds/rebuilds every page on mount
 
-Currently covered: **DropBox** (file-sync architecture), **Ticketmaster**
-(search/booking/payment, distributed locks, hot-event waiting room), **YouTube**
-(upload pipeline, transcoding, streaming via CDN), **Ad Click Aggregator**
-(lambda architecture — Kafka/Flink real-time path + Spark reconciliation), and
-**Inshorts** (news feed — cache-aside reads, queue-buffered publishing, CDC-synced
-search).
+Currently covered:
+
+- **DropBox** — file-sync architecture
+- **Ticketmaster** — search/booking/payment, distributed locks, hot-event waiting room
+- **YouTube** — upload pipeline, transcoding, streaming via CDN
+- **Ad Click Aggregator** — lambda architecture: Kafka/Flink real-time path + Spark reconciliation
+- **Inshorts** — news feed: cache-aside reads, queue-buffered publishing, CDC-synced search
 
 Repo: [github.com/ChaitanyaPandit1998/system-design](https://github.com/ChaitanyaPandit1998/system-design)
 

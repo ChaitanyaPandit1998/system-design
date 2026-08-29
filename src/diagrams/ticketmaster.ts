@@ -8,7 +8,7 @@ import { ACCENT, rect, requirementsPanel, seg, summaryPanel } from "./shapes";
 // wide gutters so arrow labels never have to share space with a box or
 // another label.
 
-export const VERSION = 5;
+export const VERSION = 6;
 
 export function build(editor: Editor) {
   const id = () => createShapeId();
@@ -126,7 +126,7 @@ export function build(editor: Editor) {
     seg(id(), 1020, 1140, 1020, 1060, { arrowEnd: "arrow", dash: "dashed" }),
   ]);
 
-  requirementsPanel(
+  const requirementsPanelId = requirementsPanel(
     editor,
     "Requirements — Ticketmaster",
     [
@@ -142,7 +142,7 @@ export function build(editor: Editor) {
     ]
   );
 
-  summaryPanel(editor, "How it works — Ticketmaster", [
+  summaryPanel(editor, requirementsPanelId, "How it works — Ticketmaster", [
     "Users search events served out of Elasticsearch, and book seats through the Booking Service, which acquires a short-TTL Redis lock (SETNX, 10 minutes) on that specific seat so two people can't buy it at once.",
     "Popular on-sale events are gated by a virtual waiting room before traffic even reaches the booking flow, smoothing the spike and issuing access tokens in order.",
     "Booking calls the Payment Service to charge via Stripe; once the webhook confirms sold/failed, the booking status updates and the Redis lock is released (or it auto-expires on TTL if payment never completes).",

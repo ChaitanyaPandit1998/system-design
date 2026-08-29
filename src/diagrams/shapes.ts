@@ -111,15 +111,21 @@ export function textBlock(id: TLShapeId, x: number, y: number, w: number, text: 
   };
 }
 
+const SIDE_PANEL_X = -900;
+const SIDE_PANEL_W = 700;
+const SIDE_PANEL_GAP = 80; // vertical gap between stacked side panels
+
 // A requirements panel placed well clear of every diagram (far negative x),
 // in the same functional/non-functional-requirements format used across the
-// docs in docs/.
+// docs in docs/. Returns the shape id so a panel stacked below it (see
+// summaryPanel) can be positioned from its *actual* rendered height instead
+// of a guessed offset.
 export function requirementsPanel(
   editor: Editor,
   title: string,
   functional: string[],
   nonFunctional: string[]
-) {
+): TLShapeId {
   const lines = [
     title,
     "",
@@ -130,14 +136,21 @@ export function requirementsPanel(
     ...nonFunctional.map((line) => `· ${line}`),
   ].join("\n");
 
-  editor.createShapes([textBlock(createShapeId(), -900, 60, 700, lines)]);
+  const id = createShapeId();
+  editor.createShapes([textBlock(id, SIDE_PANEL_X, 60, SIDE_PANEL_W, lines)]);
+  return id;
 }
 
-// A short prose summary of how the system works end-to-end, placed below the
-// requirements panel in the same far-left column (clear of the requirements
-// text — the longest requirements panel is well under 800px tall).
-export function summaryPanel(editor: Editor, title: string, paragraphs: string[]) {
+// A short prose summary of how the system works end-to-end, stacked below
+// `after` (typically the requirementsPanel's shape id) in the same far-left
+// column. Reads `after`'s actual page bounds via the editor rather than
+// guessing a fixed offset, so it can never overlap regardless of how long
+// the panel above it ends up being.
+export function summaryPanel(editor: Editor, after: TLShapeId, title: string, paragraphs: string[]) {
   const lines = [title, "", ...paragraphs].join("\n\n");
 
-  editor.createShapes([textBlock(createShapeId(), -900, 800, 700, lines)]);
+  const aboveBounds = editor.getShapePageBounds(after);
+  const y = (aboveBounds?.maxY ?? 60) + SIDE_PANEL_GAP;
+
+  editor.createShapes([textBlock(createShapeId(), SIDE_PANEL_X, y, SIDE_PANEL_W, lines)]);
 }

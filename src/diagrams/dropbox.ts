@@ -5,7 +5,7 @@ import { ellipse, rect, requirementsPanel, seg, summaryPanel } from "./shapes";
 
 // bump when this builder changes shape, to force a rebuild of a
 // previously-persisted page instead of silently keeping the stale layout
-export const VERSION = 3;
+export const VERSION = 4;
 
 export function build(editor: Editor) {
   const id = () => createShapeId();
@@ -85,7 +85,7 @@ export function build(editor: Editor) {
     }),
   ]);
 
-  requirementsPanel(
+  const requirementsPanelId = requirementsPanel(
     editor,
     "Requirements — DropBox",
     [
@@ -102,7 +102,7 @@ export function build(editor: Editor) {
     ]
   );
 
-  summaryPanel(editor, "How it works — DropBox", [
+  summaryPanel(editor, requirementsPanelId, "How it works — DropBox", [
     "The client keeps a local DB and folder in sync with the cloud through the Gateway, which handles auth/rate-limiting and routes control-plane calls to the File Service (upload/download, metadata) and the Sync Service (getChanges()).",
     "File bytes never touch the app servers: the client uploads and downloads directly to/from S3 using a presigned URL issued by the File Service.",
     "Changes are published on the Event Bus so other devices learn what changed and pull the update by calling getChanges() on the Sync Service.",

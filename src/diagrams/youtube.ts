@@ -4,7 +4,7 @@ import { ACCENT, ellipse, rect, requirementsPanel, seg, summaryPanel } from "./s
 // Page: YouTube — upload/processing pipeline + streaming path
 // (following docs/youtube-system-design.md)
 
-export const VERSION = 4;
+export const VERSION = 5;
 
 export function build(editor: Editor) {
   const id = () => createShapeId();
@@ -118,7 +118,7 @@ export function build(editor: Editor) {
     seg(id(), 790, 1300, 790, 1140, { arrowEnd: "arrow" }),
   ]);
 
-  requirementsPanel(
+  const requirementsPanelId = requirementsPanel(
     editor,
     "Requirements — YouTube",
     [
@@ -134,7 +134,7 @@ export function build(editor: Editor) {
     ]
   );
 
-  summaryPanel(editor, "How it works — YouTube", [
+  summaryPanel(editor, requirementsPanelId, "How it works — YouTube", [
     "The client asks the Video Service for a presigned URL and uploads the raw file directly to S3, bypassing the Gateway and app servers entirely.",
     "S3 fires an event notification that triggers the Upload Monitor (Lambda), which kicks off the Video Processing Service — splitting the video, transcoding in parallel to multiple resolutions, extracting audio, generating a transcript, and building the HLS/DASH manifest.",
     "Processed segments and manifests are written back to S3, and the Video Metadata DB is updated with the resulting S3 URLs and a status of ready.",

@@ -30,9 +30,13 @@ Currently covered: **DropBox** (file-sync architecture), **Ticketmaster**
 **Inshorts** (news feed — cache-aside reads, queue-buffered publishing, CDC-synced
 search).
 
+Repo: [github.com/ChaitanyaPandit1998/system-design](https://github.com/ChaitanyaPandit1998/system-design)
+
 ## How to use it
 
 ```bash
+git clone https://github.com/ChaitanyaPandit1998/system-design.git
+cd system-design
 npm install
 npm run dev
 ```

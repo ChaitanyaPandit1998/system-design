@@ -5,7 +5,8 @@
     "build": "vite build",
     "preview": "vite preview",
     "lint": "eslint .",
-    "test": "vitest run"
+    "test": "vitest run",
+    "check-docs": "node scripts/check-doc-sync.mjs"
   },
   "dependencies": {
     "react": "^19.0.0",

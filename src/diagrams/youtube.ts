@@ -6,6 +6,11 @@ import { ACCENT, ellipse, rect, requirementsPanel, seg, summaryPanel } from "./s
 
 export const VERSION = 6;
 
+// tracked by scripts/check-doc-sync.mjs (npm run check-docs) — update
+// SOURCE_DOC_HASH after reviewing this diagram against a change to the doc
+export const SOURCE_DOC = "docs/youtube-system-design.md";
+export const SOURCE_DOC_HASH = "2a9f2227b89e";
+
 export function build(editor: Editor) {
   const id = () => createShapeId();
 

@@ -46,6 +46,7 @@ npm run build    # production build, output in dist/
 npm run preview  # serve the production build locally
 npm run lint     # ESLint over src/
 npm run test     # validate every diagram's generated shapes against tldraw's schema
+npm run check-docs  # flag any doc whose diagram hasn't been reviewed since it last changed
 ```
 
 To read the underlying design write-ups without running anything, just open the
@@ -80,3 +81,12 @@ screenshot where one exists.
 - Layout tip learned the hard way: give rows/columns generous gutters (200px+)
   and keep arrow labels short — cramped spacing is what caused most of the
   readability issues fixed along the way.
+- Nothing automatically keeps a diagram in sync with the doc it's built from —
+  editing a doc doesn't touch its diagram. Each diagram file records
+  `SOURCE_DOC` and `SOURCE_DOC_HASH` (a short hash of the doc's content as of
+  the last time the diagram was reviewed); `npm run check-docs`
+  (`scripts/check-doc-sync.mjs`) recomputes each doc's current hash and warns
+  where it no longer matches. After editing a doc, run it, decide whether the
+  diagram still holds up, and update `SOURCE_DOC_HASH` in that diagram's file
+  to acknowledge you looked — the script can't know whether a given doc edit
+  actually calls for a diagram change, only that one happened.

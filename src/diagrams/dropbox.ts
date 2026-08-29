@@ -7,6 +7,11 @@ import { ellipse, rect, requirementsPanel, seg, summaryPanel } from "./shapes";
 // previously-persisted page instead of silently keeping the stale layout
 export const VERSION = 5;
 
+// tracked by scripts/check-doc-sync.mjs (npm run check-docs) — update
+// SOURCE_DOC_HASH after reviewing this diagram against a change to the doc
+export const SOURCE_DOC = "docs/dropbox-system-design.md";
+export const SOURCE_DOC_HASH = "1c40ee684c8b";
+
 export function build(editor: Editor) {
   const id = () => createShapeId();
 

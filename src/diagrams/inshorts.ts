@@ -7,6 +7,11 @@ import { ACCENT, rect, requirementsPanel, seg, summaryPanel } from "./shapes";
 
 export const VERSION = 4;
 
+// tracked by scripts/check-doc-sync.mjs (npm run check-docs) — update
+// SOURCE_DOC_HASH after reviewing this diagram against a change to the doc
+export const SOURCE_DOC = "docs/inshorts-news-feed-system-design.md";
+export const SOURCE_DOC_HASH = "4d0a768c6439";
+
 export function build(editor: Editor) {
   const id = () => createShapeId();
 

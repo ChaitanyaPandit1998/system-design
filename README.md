@@ -1,5 +1,7 @@
 # System Design
 
+[![CI](https://github.com/ChaitanyaPandit1998/system-design/actions/workflows/ci.yml/badge.svg)](https://github.com/ChaitanyaPandit1998/system-design/actions/workflows/ci.yml)
+
 Personal notes and diagrams for classic system design interview problems, plus an
 interactive [tldraw](https://tldraw.dev) canvas that turns the written architecture
 into an editable whiteboard.
@@ -52,6 +54,9 @@ npm run lint     # ESLint over src/
 npm run test     # validate every diagram's generated shapes against tldraw's schema
 npm run check-docs  # flag any doc whose diagram hasn't been reviewed since it last changed
 ```
+
+`lint`, `test`, `check-docs`, and `build` all run in CI ([`.github/workflows/ci.yml`](.github/workflows/ci.yml))
+on every push and PR against `main` — see the badge above.
 
 To read the underlying design write-ups without running anything, just open the
 files in `docs/` directly — they're plain Markdown with an embedded architecture

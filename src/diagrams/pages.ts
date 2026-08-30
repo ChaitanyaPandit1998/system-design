@@ -1,10 +1,14 @@
 import type { Editor, TLPageId } from "tldraw";
 import * as adClickAggregator from "./ad-click-aggregator";
 import * as caching from "./caching";
+import * as capTheorem from "./cap-theorem";
+import * as consistentHashing from "./consistent-hashing";
+import * as distributedRateLimiter from "./distributed-rate-limiter";
 import * as dropbox from "./dropbox";
 import * as druidIceberg from "./druid-iceberg";
 import * as inshorts from "./inshorts";
 import * as messageQueues from "./message-queues";
+import * as sharding from "./sharding";
 import * as ticketmaster from "./ticketmaster";
 import * as youtube from "./youtube";
 
@@ -27,6 +31,14 @@ export const OTHER_PAGES: DiagramPage[] = [
   { name: "Druid & Iceberg", version: druidIceberg.VERSION, build: druidIceberg.build },
   { name: "Message Queues", version: messageQueues.VERSION, build: messageQueues.build },
   { name: "Caching", version: caching.VERSION, build: caching.build },
+  { name: "CAP Theorem", version: capTheorem.VERSION, build: capTheorem.build },
+  { name: "Consistent Hashing", version: consistentHashing.VERSION, build: consistentHashing.build },
+  { name: "Sharding", version: sharding.VERSION, build: sharding.build },
+  {
+    name: "Distributed Rate Limiter",
+    version: distributedRateLimiter.VERSION,
+    build: distributedRateLimiter.build,
+  },
 ];
 
 function ensurePage(editor: Editor, pageId: TLPageId, version: number, build: (editor: Editor) => void) {

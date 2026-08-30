@@ -10,17 +10,18 @@ into an editable whiteboard.
 
 - **`docs/`** — write-ups for each system (requirements, data model, key trade-offs,
   failure scenarios), one Markdown file per problem, with the reference architecture
-  diagram alongside it in `docs/architecture-diagrams/`. Also includes a few
-  standalone technology deep-dives (`druid-iceberg.md`, `message-queues.md`,
-  `caching.md`) that compare tools/patterns rather than describe one system.
+  diagram alongside it in `docs/architecture-diagrams/`. Also includes a set of
+  standalone technology/pattern deep-dives (caching, message queues, Druid &
+  Iceberg, CAP theorem, consistent hashing, sharding) that compare tools or
+  trade-offs rather than describe one system.
 - **`src/`** — a Vite + React app embedding the real tldraw SDK (`src/App.tsx`).
   On first load it seeds one tldraw **page per doc**, built programmatically from
-  it, so the box-and-arrow diagram and the prose stay in sync. The five
+  it, so the box-and-arrow diagram and the prose stay in sync. The six
   single-system pages get a Requirements panel (functional / non-functional); the
-  three comparison pages get a "Key Concepts" panel instead (per-topic bullet
-  notes — requirements framing doesn't fit a technology comparison). Every page
-  also gets a "How it works" summary. Once loaded, it's a normal tldraw board —
-  drag things around, add sticky notes, redraw whatever you like.
+  six comparison/reference pages get a "Key Concepts" panel instead (per-topic
+  bullet notes — requirements framing doesn't fit a technology comparison). Every
+  page also gets a "How it works" summary. Once loaded, it's a normal tldraw
+  board — drag things around, add sticky notes, redraw whatever you like.
   - `src/diagrams/shapes.ts` — shared shape-building helpers (`rect`, `ellipse`,
     `seg` for arrows, `requirementsPanel`, `notesPanel`, `summaryPanel`)
   - `src/diagrams/<system>.ts` — one file per diagram, each exporting a `VERSION`
@@ -37,6 +38,10 @@ Currently covered:
 - **Druid & Iceberg** — the modern pipeline: Kafka → Flink/Spark → Iceberg (lake) → Druid/Trino (serving)
 - **Message Queues** — RabbitMQ vs. Kafka vs. SQS, side by side: push vs. pull, exchange+binding vs. partitioned log vs. visibility timeout
 - **Caching** — the five cache architectures compared: cache-aside, write-through, write-behind, read-through, write-around
+- **CAP Theorem** — the CP vs. AP choice during a network partition, via the USA/Europe replication example
+- **Consistent Hashing** — why modulo hashing breaks on resize, and how the hash ring bounds the damage
+- **Sharding** — range-based vs. hash-based vs. directory-based data distribution, side by side
+- **Distributed Rate Limiter** — API Gateway + sharded Token Bucket in Redis, consistent-hashed, fail-closed
 
 Repo: [github.com/ChaitanyaPandit1998/system-design](https://github.com/ChaitanyaPandit1998/system-design)
 

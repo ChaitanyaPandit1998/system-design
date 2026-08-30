@@ -31,6 +31,10 @@ const PAGES = [
   { name: "Druid & Iceberg", diagram: "src/diagrams/druid-iceberg.ts" },
   { name: "Message Queues", diagram: "src/diagrams/message-queues.ts" },
   { name: "Caching", diagram: "src/diagrams/caching.ts" },
+  { name: "CAP Theorem", diagram: "src/diagrams/cap-theorem.ts" },
+  { name: "Consistent Hashing", diagram: "src/diagrams/consistent-hashing.ts" },
+  { name: "Sharding", diagram: "src/diagrams/sharding.ts" },
+  { name: "Distributed Rate Limiter", diagram: "src/diagrams/distributed-rate-limiter.ts" },
 ];
 
 function hashOf(content) {

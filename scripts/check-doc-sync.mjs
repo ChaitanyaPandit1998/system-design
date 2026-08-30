@@ -28,6 +28,8 @@ const PAGES = [
   { name: "YouTube", diagram: "src/diagrams/youtube.ts" },
   { name: "Ad Click Aggregator", diagram: "src/diagrams/ad-click-aggregator.ts" },
   { name: "Inshorts", diagram: "src/diagrams/inshorts.ts" },
+  { name: "Druid & Iceberg", diagram: "src/diagrams/druid-iceberg.ts" },
+  { name: "Message Queues", diagram: "src/diagrams/message-queues.ts" },
 ];
 
 function hashOf(content) {

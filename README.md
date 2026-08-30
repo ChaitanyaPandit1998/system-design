@@ -10,17 +10,20 @@ into an editable whiteboard.
 
 - **`docs/`** — write-ups for each system (requirements, data model, key trade-offs,
   failure scenarios), one Markdown file per problem, with the reference architecture
-  diagram alongside it in `docs/architecture-diagrams/`. Also includes a few
-  standalone deep-dive references (`caching.md`, `message-queues.md`,
-  `druid-iceberg.md`) not tied to a specific system.
+  diagram alongside it in `docs/architecture-diagrams/`. Also includes a couple of
+  standalone technology deep-dives (`druid-iceberg.md`, `message-queues.md`) that
+  compare tools rather than describe one system, plus a general reference
+  (`caching.md`) not tied to any diagram.
 - **`src/`** — a Vite + React app embedding the real tldraw SDK (`src/App.tsx`).
-  On first load it seeds one tldraw **page per system**, built programmatically
-  from the corresponding doc, so the box-and-arrow diagram and the prose stay in
-  sync. Each diagram also gets a Requirements panel (functional / non-functional)
-  next to it, in the same format used in the docs. Once loaded, it's a normal
-  tldraw board — drag things around, add sticky notes, redraw whatever you like.
+  On first load it seeds one tldraw **page per doc**, built programmatically from
+  it, so the box-and-arrow diagram and the prose stay in sync. The five
+  single-system pages get a Requirements panel (functional / non-functional); the
+  two comparison pages get a "Key Concepts" panel instead (per-tool bullet notes —
+  requirements framing doesn't fit a technology comparison). Every page also gets
+  a "How it works" summary. Once loaded, it's a normal tldraw board — drag things
+  around, add sticky notes, redraw whatever you like.
   - `src/diagrams/shapes.ts` — shared shape-building helpers (`rect`, `ellipse`,
-    `seg` for arrows, `requirementsPanel`)
+    `seg` for arrows, `requirementsPanel`, `notesPanel`, `summaryPanel`)
   - `src/diagrams/<system>.ts` — one file per diagram, each exporting a `VERSION`
     number and a `build(editor)` function
   - `src/diagrams/pages.ts` — seeds/rebuilds every page on mount
@@ -32,6 +35,8 @@ Currently covered:
 - **YouTube** — upload pipeline, transcoding, streaming via CDN
 - **Ad Click Aggregator** — lambda architecture: Kafka/Flink real-time path + Spark reconciliation
 - **Inshorts** — news feed: cache-aside reads, queue-buffered publishing, CDC-synced search
+- **Druid & Iceberg** — the modern pipeline: Kafka → Flink/Spark → Iceberg (lake) → Druid/Trino (serving)
+- **Message Queues** — RabbitMQ vs. Kafka vs. SQS, side by side: push vs. pull, exchange+binding vs. partitioned log vs. visibility timeout
 
 Repo: [github.com/ChaitanyaPandit1998/system-design](https://github.com/ChaitanyaPandit1998/system-design)
 

@@ -167,6 +167,27 @@ export function requirementsPanel(
   return borderedTextPanel(editor, SIDE_PANEL_X, 60, SIDE_PANEL_W, lines);
 }
 
+// A generic sectioned notes panel — same bordered-card treatment as
+// requirementsPanel, but for reference/deep-dive pages where "functional /
+// non-functional requirements" framing doesn't fit (there's no single
+// system with users to gather requirements from). Each section gets a
+// heading line followed by its bullet items.
+export function notesPanel(
+  editor: Editor,
+  title: string,
+  sections: { heading: string; items: string[] }[]
+): TLShapeId {
+  const lines = [
+    title,
+    "",
+    ...sections.flatMap((section) => [section.heading, ...section.items.map((line) => `· ${line}`), ""]),
+  ]
+    .join("\n")
+    .trimEnd();
+
+  return borderedTextPanel(editor, SIDE_PANEL_X, 60, SIDE_PANEL_W, lines);
+}
+
 // A short prose summary of how the system works end-to-end, stacked below
 // `after` (typically the requirementsPanel's returned id) in the same
 // far-left column. Reads `after`'s actual page bounds via the editor rather

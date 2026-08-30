@@ -9,7 +9,7 @@ import { ACCENT, ellipse, notesPanel, rect, seg, summaryPanel } from "./shapes";
 // changes, the ring only remaps a small arc. So this draws both, side by
 // side, same "draw the difference" approach as message-queues.ts.
 
-export const VERSION = 1;
+export const VERSION = 2;
 
 export const SOURCE_DOC = "docs/consistent-hashing.md";
 export const SOURCE_DOC_HASH = "686c4a944c0a";
@@ -35,19 +35,16 @@ export function build(editor: Editor) {
     ellipse(db2a, 300, 200, 160, 140, "DB 2"),
     ellipse(db3a, 540, 200, 160, 140, "DB 3"),
 
-    rect(afterLabel, 60, 560, 700, 90, "After adding DB 4 — hash(key) % 4", { size: "m" }),
-    ellipse(db1b, 20, 700, 150, 130, "DB 1"),
-    ellipse(db2b, 210, 700, 150, 130, "DB 2"),
-    ellipse(db3b, 400, 700, 150, 130, "DB 3"),
-    ellipse(db4b, 590, 700, 150, 130, "DB 4"),
+    rect(afterLabel, 60, 650, 700, 90, "After adding DB 4 — hash(key) % 4", { size: "m" }),
+    ellipse(db1b, 20, 790, 150, 130, "DB 1"),
+    ellipse(db2b, 210, 790, 150, 130, "DB 2"),
+    ellipse(db3b, 400, 790, 150, 130, "DB 3"),
+    ellipse(db4b, 590, 790, 150, 130, "DB 4"),
   ]);
 
   editor.createShapes([
-    seg(id(), 140, 340, 100, 700, { arrowEnd: "arrow", color: ACCENT }),
-    seg(id(), 380, 340, 290, 700, { arrowEnd: "arrow", color: ACCENT }),
-    seg(id(), 620, 340, 480, 700, { arrowEnd: "arrow", color: ACCENT }),
-    seg(id(), 700, 400, 665, 700, {
-      text: "~75% of ALL keys remap\n(not just the new DB's share)",
+    seg(id(), 410, 340, 410, 650, {
+      text: "hash(key) % 3 → % 4\n~75% of ALL keys remap\n(not just the new DB's share)",
       arrowEnd: "arrow",
       color: ACCENT,
     }),
@@ -73,12 +70,12 @@ export function build(editor: Editor) {
   ]);
 
   editor.createShapes([
-    seg(id(), 1970, 200, 2070, 240, {
+    seg(id(), 2100, 40, 1999, 190, {
       text: "only the keys between\nDB1 and DB5 move",
       arrowEnd: "arrow",
       color: ACCENT,
     }),
-    seg(id(), 900, 460, 1620, 460, {
+    seg(id(), 900, 460, 1560, 460, {
       text: "same idea, arranged on a ring\ninstead of a straight line",
       arrowEnd: "none",
       dash: "dashed",

@@ -10,7 +10,7 @@ import { ACCENT, notesPanel, rect, seg, summaryPanel } from "./shapes";
 // fork into the two answers, so the reader can see the actual decision
 // rather than just the two arrows a Venn diagram would show.
 
-export const VERSION = 1;
+export const VERSION = 2;
 
 export const SOURCE_DOC = "docs/cap-theorem.md";
 export const SOURCE_DOC_HASH = "32e9738f659b";
@@ -39,7 +39,7 @@ export function build(editor: Editor) {
       "Europe Server\n\nname = \"Alex\"\n(stale — replication broken)",
       { verticalAlign: "start" }
     ),
-    rect(userB, 1240, 420, 200, 100, "User B"),
+    rect(userB, 1560, 150, 200, 100, "User B"),
 
     rect(
       cpBox,
@@ -52,7 +52,7 @@ export function build(editor: Editor) {
     ),
     rect(
       apBox,
-      1180,
+      1240,
       620,
       340,
       220,
@@ -64,10 +64,10 @@ export function build(editor: Editor) {
   editor.createShapes([
     seg(id(), 260, 190, 380, 170, { text: "write:\nupdate name", arrowEnd: "arrow" }),
     seg(id(), 660, 170, 900, 170, { text: "✕ replicate\n(partition)", arrowEnd: "arrow", color: ACCENT, dash: "dashed" }),
-    seg(id(), 1240, 460, 1040, 260, { text: "read profile", arrowEnd: "arrow" }),
+    seg(id(), 1560, 200, 1180, 170, { text: "read profile", arrowEnd: "arrow" }),
 
     seg(id(), 990, 260, 930, 620, { arrowEnd: "arrow", color: ACCENT }),
-    seg(id(), 1090, 260, 1350, 620, { arrowEnd: "arrow" }),
+    seg(id(), 1090, 260, 1410, 620, { arrowEnd: "arrow" }),
   ]);
 
   const notesId = notesPanel(editor, "Key Concepts — CAP Theorem", [

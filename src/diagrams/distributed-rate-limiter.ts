@@ -8,7 +8,7 @@ import { ACCENT, rect, requirementsPanel, seg, summaryPanel } from "./shapes";
 // functional/non-functional requirements), not a comparison doc, so it
 // gets the requirements-panel treatment those pages use.
 
-export const VERSION = 1;
+export const VERSION = 2;
 
 export const SOURCE_DOC = "docs/distributed-rate-limiter-system-design.md";
 export const SOURCE_DOC_HASH = "3a97097e5594";
@@ -38,34 +38,41 @@ export function build(editor: Editor) {
       { verticalAlign: "start" }
     ),
 
-    rect(shard1, 380, 500, 240, 190, "Redis Shard 1\n(master + replica)\n\nbuckets: hash range A", {
+    rect(shard1, 600, 500, 220, 190, "Redis Shard 1\n(master + replica)\n\nbuckets: hash range A", {
       verticalAlign: "start",
       color: ACCENT,
     }),
-    rect(shard2, 660, 500, 240, 190, "Redis Shard 2\n(master + replica)\n\nbuckets: hash range B", {
+    rect(shard2, 860, 500, 220, 190, "Redis Shard 2\n(master + replica)\n\nbuckets: hash range B", {
       verticalAlign: "start",
       color: ACCENT,
     }),
-    rect(shard3, 940, 500, 240, 190, "Redis Shard 3\n(master + replica)\n\nbuckets: hash range C", {
+    rect(shard3, 1120, 500, 220, 190, "Redis Shard 3\n(master + replica)\n\nbuckets: hash range C", {
       verticalAlign: "start",
       color: ACCENT,
     }),
 
-    rect(backend, 380, 920, 300, 150, "Backend\nMicroservices"),
-    rect(rejected, 820, 920, 320, 150, "HTTP 429\nToo Many Requests\n\n+ rate-limit headers"),
+    rect(backend, 100, 920, 300, 150, "Backend\nMicroservices"),
+    rect(rejected, 1550, 920, 320, 150, "HTTP 429\nToo Many Requests\n\n+ rate-limit headers"),
   ]);
 
   editor.createShapes([
     seg(id(), 260, 155, 460, 155, { text: "request", arrowEnd: "arrow" }),
 
-    seg(id(), 700, 260, 790, 500, {
+    seg(id(), 700, 260, 970, 500, {
       text: "route via consistent\nhashing(client key)",
       arrowEnd: "arrow",
       color: ACCENT,
     }),
 
-    seg(id(), 600, 260, 500, 920, { text: "pass: forward request", arrowEnd: "arrow" }),
-    seg(id(), 720, 260, 970, 920, { text: "fail: reject", arrowEnd: "arrow" }),
+    // pass: routed down the left margin, clear of every shard box
+    seg(id(), 550, 260, 550, 360, { arrowEnd: "none" }),
+    seg(id(), 550, 360, 250, 360, { arrowEnd: "none" }),
+    seg(id(), 250, 360, 250, 920, { text: "pass: forward request", arrowEnd: "arrow" }),
+
+    // fail: routed down the right margin, clear of every shard box
+    seg(id(), 790, 260, 790, 360, { arrowEnd: "none" }),
+    seg(id(), 790, 360, 1710, 360, { arrowEnd: "none" }),
+    seg(id(), 1710, 360, 1710, 920, { text: "fail: reject", arrowEnd: "arrow" }),
   ]);
 
   const requirementsPanelId = requirementsPanel(

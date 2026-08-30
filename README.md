@@ -101,6 +101,14 @@ screenshot where one exists.
 - Layout tip learned the hard way: give rows/columns generous gutters (200px+)
   and keep arrow labels short — cramped spacing is what caused most of the
   readability issues fixed along the way.
+- `src/diagrams/layout.test.ts` catches that class of issue automatically: it
+  runs every page's `build()` and checks whether any arrow's line or estimated
+  label footprint overlaps a box it isn't connected to (a cramped label
+  crowding a neighboring node, an arrow cutting through an unrelated box). It's
+  a heuristic — label size is estimated from character/line counts, not
+  measured — so it won't catch everything a human eye would, but it catches
+  the exact bug pattern that kept recurring across these diagrams. Run it (or
+  extend it) after editing any `build()` function's coordinates.
 - Nothing automatically keeps a diagram in sync with the doc it's built from —
   editing a doc doesn't touch its diagram. Each diagram file records
   `SOURCE_DOC` and `SOURCE_DOC_HASH` (a short hash of the doc's content as of

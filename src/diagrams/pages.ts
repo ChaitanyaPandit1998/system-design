@@ -1,5 +1,6 @@
 import type { Editor, TLPageId } from "tldraw";
 import * as adClickAggregator from "./ad-click-aggregator";
+import * as caching from "./caching";
 import * as dropbox from "./dropbox";
 import * as druidIceberg from "./druid-iceberg";
 import * as inshorts from "./inshorts";
@@ -25,6 +26,7 @@ export const OTHER_PAGES: DiagramPage[] = [
   { name: "Inshorts", version: inshorts.VERSION, build: inshorts.build },
   { name: "Druid & Iceberg", version: druidIceberg.VERSION, build: druidIceberg.build },
   { name: "Message Queues", version: messageQueues.VERSION, build: messageQueues.build },
+  { name: "Caching", version: caching.VERSION, build: caching.build },
 ];
 
 function ensurePage(editor: Editor, pageId: TLPageId, version: number, build: (editor: Editor) => void) {

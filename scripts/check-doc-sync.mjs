@@ -30,6 +30,7 @@ const PAGES = [
   { name: "Inshorts", diagram: "src/diagrams/inshorts.ts" },
   { name: "Druid & Iceberg", diagram: "src/diagrams/druid-iceberg.ts" },
   { name: "Message Queues", diagram: "src/diagrams/message-queues.ts" },
+  { name: "Caching", diagram: "src/diagrams/caching.ts" },
 ];
 
 function hashOf(content) {

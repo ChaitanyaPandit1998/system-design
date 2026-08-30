@@ -10,18 +10,17 @@ into an editable whiteboard.
 
 - **`docs/`** — write-ups for each system (requirements, data model, key trade-offs,
   failure scenarios), one Markdown file per problem, with the reference architecture
-  diagram alongside it in `docs/architecture-diagrams/`. Also includes a couple of
-  standalone technology deep-dives (`druid-iceberg.md`, `message-queues.md`) that
-  compare tools rather than describe one system, plus a general reference
-  (`caching.md`) not tied to any diagram.
+  diagram alongside it in `docs/architecture-diagrams/`. Also includes a few
+  standalone technology deep-dives (`druid-iceberg.md`, `message-queues.md`,
+  `caching.md`) that compare tools/patterns rather than describe one system.
 - **`src/`** — a Vite + React app embedding the real tldraw SDK (`src/App.tsx`).
   On first load it seeds one tldraw **page per doc**, built programmatically from
   it, so the box-and-arrow diagram and the prose stay in sync. The five
   single-system pages get a Requirements panel (functional / non-functional); the
-  two comparison pages get a "Key Concepts" panel instead (per-tool bullet notes —
-  requirements framing doesn't fit a technology comparison). Every page also gets
-  a "How it works" summary. Once loaded, it's a normal tldraw board — drag things
-  around, add sticky notes, redraw whatever you like.
+  three comparison pages get a "Key Concepts" panel instead (per-topic bullet
+  notes — requirements framing doesn't fit a technology comparison). Every page
+  also gets a "How it works" summary. Once loaded, it's a normal tldraw board —
+  drag things around, add sticky notes, redraw whatever you like.
   - `src/diagrams/shapes.ts` — shared shape-building helpers (`rect`, `ellipse`,
     `seg` for arrows, `requirementsPanel`, `notesPanel`, `summaryPanel`)
   - `src/diagrams/<system>.ts` — one file per diagram, each exporting a `VERSION`
@@ -37,6 +36,7 @@ Currently covered:
 - **Inshorts** — news feed: cache-aside reads, queue-buffered publishing, CDC-synced search
 - **Druid & Iceberg** — the modern pipeline: Kafka → Flink/Spark → Iceberg (lake) → Druid/Trino (serving)
 - **Message Queues** — RabbitMQ vs. Kafka vs. SQS, side by side: push vs. pull, exchange+binding vs. partitioned log vs. visibility timeout
+- **Caching** — the five cache architectures compared: cache-aside, write-through, write-behind, read-through, write-around
 
 Repo: [github.com/ChaitanyaPandit1998/system-design](https://github.com/ChaitanyaPandit1998/system-design)
 

@@ -13,7 +13,7 @@ export const VERSION = 7;
 // tracked by scripts/check-doc-sync.mjs (npm run check-docs) — update
 // SOURCE_DOC_HASH after reviewing this diagram against a change to the doc
 export const SOURCE_DOC = "docs/ticketmaster-system-design.md";
-export const SOURCE_DOC_HASH = "f277742b1fef";
+export const SOURCE_DOC_HASH = "be2e88dec046";
 
 export function build(editor: Editor) {
   const id = () => createShapeId();

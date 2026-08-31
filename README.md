@@ -16,33 +16,38 @@ into an editable whiteboard.
   trade-offs rather than describe one system.
 - **`src/`** — a Vite + React app embedding the real tldraw SDK (`src/App.tsx`).
   On first load it seeds one tldraw **page per doc**, built programmatically from
-  it, so the box-and-arrow diagram and the prose stay in sync. The seven
-  single-system pages get a Requirements panel (functional / non-functional); the
-  six comparison/reference pages get a "Key Concepts" panel instead (per-topic
-  bullet notes — requirements framing doesn't fit a technology comparison). Every
-  page also gets a "How it works" summary. Once loaded, it's a normal tldraw
-  board — drag things around, add sticky notes, redraw whatever you like.
+  it, so the box-and-arrow diagram and the prose stay in sync, plus an **Index**
+  page as the landing page — a map of every other page, so opening the app
+  doesn't mean scrolling a page dropdown blind. The seven single-system pages get
+  a Requirements panel (functional / non-functional); the six comparison/
+  reference pages get a "Key Concepts" panel instead (per-topic bullet notes —
+  requirements framing doesn't fit a technology comparison). Every page also gets
+  a "How it works" summary. Once loaded, it's a normal tldraw board — drag things
+  around, add sticky notes, redraw whatever you like.
   - `src/diagrams/shapes.ts` — shared shape-building helpers (`rect`, `ellipse`,
-    `seg` for arrows, `requirementsPanel`, `notesPanel`, `summaryPanel`)
+    `seg` for arrows, `requirementsPanel`, `notesPanel`, `summaryPanel`,
+    `borderedTextPanel`)
   - `src/diagrams/<system>.ts` — one file per diagram, each exporting a `VERSION`
     number and a `build(editor)` function
+  - `src/diagrams/index-page.ts` — the landing page; not built from a doc, so it's
+    the one page not tracked by `check-docs`
   - `src/diagrams/pages.ts` — seeds/rebuilds every page on mount
 
-Currently covered:
+Currently covered (see the in-app **Index** page for the same list, grouped):
 
 - **DropBox** — file-sync architecture
 - **Ticketmaster** — search/booking/payment, distributed locks, hot-event waiting room
 - **YouTube** — upload pipeline, transcoding, streaming via CDN
 - **Ad Click Aggregator** — lambda architecture: Kafka/Flink real-time path + Spark reconciliation
 - **Inshorts** — news feed: cache-aside reads, queue-buffered publishing, CDC-synced search
-- **Druid & Iceberg** — the modern pipeline: Kafka → Flink/Spark → Iceberg (lake) → Druid/Trino (serving)
-- **Message Queues** — RabbitMQ vs. Kafka vs. SQS, side by side: push vs. pull, exchange+binding vs. partitioned log vs. visibility timeout
+- **Distributed Rate Limiter** — API Gateway + sharded Token Bucket in Redis, consistent-hashed, fail-closed
+- **Uber** — fare estimation, geospatial driver matching, distributed-locked driver assignment, queued peak-demand handling
 - **Caching** — the five cache architectures compared: cache-aside, write-through, write-behind, read-through, write-around
+- **Message Queues** — RabbitMQ vs. Kafka vs. SQS, side by side: push vs. pull, exchange+binding vs. partitioned log vs. visibility timeout
+- **Druid & Iceberg** — the modern pipeline: Kafka → Flink/Spark → Iceberg (lake) → Druid/Trino (serving)
 - **CAP Theorem** — the CP vs. AP choice during a network partition, via the USA/Europe replication example
 - **Consistent Hashing** — why modulo hashing breaks on resize, and how the hash ring bounds the damage
 - **Sharding** — range-based vs. hash-based vs. directory-based data distribution, side by side
-- **Distributed Rate Limiter** — API Gateway + sharded Token Bucket in Redis, consistent-hashed, fail-closed
-- **Uber** — fare estimation, geospatial driver matching, distributed-locked driver assignment, queued peak-demand handling
 
 Repo: [github.com/ChaitanyaPandit1998/system-design](https://github.com/ChaitanyaPandit1998/system-design)
 

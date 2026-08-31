@@ -6,6 +6,7 @@ import * as consistentHashing from "./consistent-hashing";
 import * as distributedRateLimiter from "./distributed-rate-limiter";
 import * as dropbox from "./dropbox";
 import * as druidIceberg from "./druid-iceberg";
+import * as indexPage from "./index-page";
 import * as inshorts from "./inshorts";
 import * as messageQueues from "./message-queues";
 import * as sharding from "./sharding";
@@ -19,28 +20,26 @@ export interface DiagramPage {
   build: (editor: Editor) => void;
 }
 
-// The first page is special-cased in App.tsx (it's renamed from tldraw's
-// default "Page 1" rather than created), everything after that is just
-// created by name if missing.
-export const FIRST_PAGE: DiagramPage = { name: "DropBox", version: dropbox.VERSION, build: dropbox.build };
+// The first page is special-cased in App.tsx (it's renamed from whatever it
+// currently is rather than created), everything after that is just created
+// by name if missing. It's a navigation map, not built from a doc, so it
+// isn't tracked by scripts/check-doc-sync.mjs the way every other page is.
+export const FIRST_PAGE: DiagramPage = { name: "Index", version: indexPage.VERSION, build: indexPage.build };
 
 export const OTHER_PAGES: DiagramPage[] = [
+  { name: "DropBox", version: dropbox.VERSION, build: dropbox.build },
   { name: "Ticketmaster", version: ticketmaster.VERSION, build: ticketmaster.build },
   { name: "YouTube", version: youtube.VERSION, build: youtube.build },
   { name: "Ad Click Aggregator", version: adClickAggregator.VERSION, build: adClickAggregator.build },
   { name: "Inshorts", version: inshorts.VERSION, build: inshorts.build },
-  { name: "Druid & Iceberg", version: druidIceberg.VERSION, build: druidIceberg.build },
-  { name: "Message Queues", version: messageQueues.VERSION, build: messageQueues.build },
+  { name: "Distributed Rate Limiter", version: distributedRateLimiter.VERSION, build: distributedRateLimiter.build },
+  { name: "Uber", version: uber.VERSION, build: uber.build },
   { name: "Caching", version: caching.VERSION, build: caching.build },
+  { name: "Message Queues", version: messageQueues.VERSION, build: messageQueues.build },
+  { name: "Druid & Iceberg", version: druidIceberg.VERSION, build: druidIceberg.build },
   { name: "CAP Theorem", version: capTheorem.VERSION, build: capTheorem.build },
   { name: "Consistent Hashing", version: consistentHashing.VERSION, build: consistentHashing.build },
   { name: "Sharding", version: sharding.VERSION, build: sharding.build },
-  {
-    name: "Distributed Rate Limiter",
-    version: distributedRateLimiter.VERSION,
-    build: distributedRateLimiter.build,
-  },
-  { name: "Uber", version: uber.VERSION, build: uber.build },
 ];
 
 function ensurePage(editor: Editor, pageId: TLPageId, version: number, build: (editor: Editor) => void) {
@@ -71,7 +70,12 @@ export function seedAllPages(editor: Editor) {
   const pages = editor.getPages();
   const firstPage = pages[0];
 
-  if (firstPage.name === "Page 1") {
+  // Renaming whenever it's not already "Index" (rather than only checking
+  // for tldraw's default "Page 1") also migrates anyone whose page[0] was
+  // the old first-page convention ("DropBox", before this file added the
+  // Index page) — it gets renamed to Index and rebuilt as one, and DropBox
+  // reappears fresh via ensureNamedPage below since that name is now free.
+  if (firstPage.name !== FIRST_PAGE.name) {
     editor.renamePage(firstPage, FIRST_PAGE.name);
   }
   ensurePage(editor, firstPage.id, FIRST_PAGE.version, FIRST_PAGE.build);

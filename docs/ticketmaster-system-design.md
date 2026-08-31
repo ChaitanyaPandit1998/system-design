@@ -60,10 +60,13 @@ Users → CDN → Load Balancer → API Gateway → Services
 - Uses **Debezium + Kafka** to sync PostgreSQL → Elasticsearch in real-time
 - Keeps search results consistent with booking state
 - Enables near-real-time updates without direct coupling
+- Same CDC-to-search pattern used in [Inshorts](inshorts-news-feed-system-design.md#4-keeping-search-consistent-cdc) and the [Druid & Iceberg](druid-iceberg.md) pipeline
 
 ---
 
 ## 4. Preventing Double Booking (Critical Concept)
+
+> Same shape as the driver-assignment lock in [Uber](uber-system-design.md#5-deep-dives) — a TTL-bound Redis lock that auto-releases on timeout instead of requiring manual cleanup.
 
 ### Distributed Lock with Redis
 

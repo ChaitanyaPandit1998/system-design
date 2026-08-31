@@ -95,9 +95,10 @@ Driver Client ┘         │                                            │    
 ~10M drivers pinging every ~5 seconds is ~2M writes/second — enough to fall over a general-purpose database, and lat/long doesn't index well in a plain B-tree anyway (poor fit for proximity search).
 - **Great solution**: a real-time, in-memory geospatial data store (e.g. Redis geospatial commands) built for exactly this — fast writes, native "nearby" queries
 - **Client-side complement**: adaptive location-update intervals — an idle or slow-moving driver doesn't need a ping every 5 seconds; let the client reduce frequency based on on-device sensors
+- At real scale, a single geospatial store won't hold 10M drivers either — it gets [sharded](sharding.md), typically by geographic region (a natural, query-aligned key: a driver in Mumbai is never matched against a rider in Tokyo), with [consistent hashing](consistent-hashing.md) so adding a region-shard doesn't reshuffle every driver's data
 
 ### Preventing Double-Assignment of a Driver
-Same shape as Ticketmaster's double-booking problem: two ride requests must never lock the same driver at once.
+Same shape as [Ticketmaster's double-booking problem](ticketmaster-system-design.md#4-preventing-double-booking-critical-concept): two ride requests must never lock the same driver at once.
 - **Great solution**: a distributed lock with a TTL on the driver, released on accept/decline or auto-expired if the driver doesn't respond — the driver gets ~10 seconds to accept before the system moves on
 
 ### No Dropped Requests During Peak Demand

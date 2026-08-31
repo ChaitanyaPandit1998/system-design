@@ -121,7 +121,7 @@ const SIDE_PANEL_PADDING = 32; // border inset around the text inside a panel
 // as a distinct card instead of floating text. The border has no fill, so
 // it never needs to be z-ordered behind the text. Returns the border
 // shape's id — used to position whatever panel is stacked below it.
-function borderedTextPanel(editor: Editor, x: number, y: number, w: number, text: string): TLShapeId {
+export function borderedTextPanel(editor: Editor, x: number, y: number, w: number, text: string): TLShapeId {
   const textId = createShapeId();
   editor.createShapes([textBlock(textId, x, y, w, text)]);
 

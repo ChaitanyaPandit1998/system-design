@@ -15,7 +15,7 @@ import { ACCENT, ellipse, rect, requirementsPanel, seg, summaryPanel } from "./s
 export const VERSION = 1;
 
 export const SOURCE_DOC = "docs/uber-system-design.md";
-export const SOURCE_DOC_HASH = "f4b706f27d23";
+export const SOURCE_DOC_HASH = "e3f9d31c0768";
 
 export function build(editor: Editor) {
   const id = () => createShapeId();

@@ -35,6 +35,7 @@ const PAGES = [
   { name: "Consistent Hashing", diagram: "src/diagrams/consistent-hashing.ts" },
   { name: "Sharding", diagram: "src/diagrams/sharding.ts" },
   { name: "Distributed Rate Limiter", diagram: "src/diagrams/distributed-rate-limiter.ts" },
+  { name: "Uber", diagram: "src/diagrams/uber.ts" },
 ];
 
 function hashOf(content) {

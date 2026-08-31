@@ -10,6 +10,7 @@ import * as inshorts from "./inshorts";
 import * as messageQueues from "./message-queues";
 import * as sharding from "./sharding";
 import * as ticketmaster from "./ticketmaster";
+import * as uber from "./uber";
 import * as youtube from "./youtube";
 
 export interface DiagramPage {
@@ -39,6 +40,7 @@ export const OTHER_PAGES: DiagramPage[] = [
     version: distributedRateLimiter.VERSION,
     build: distributedRateLimiter.build,
   },
+  { name: "Uber", version: uber.VERSION, build: uber.build },
 ];
 
 function ensurePage(editor: Editor, pageId: TLPageId, version: number, build: (editor: Editor) => void) {

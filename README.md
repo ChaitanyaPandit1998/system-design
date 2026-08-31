@@ -16,7 +16,7 @@ into an editable whiteboard.
   trade-offs rather than describe one system.
 - **`src/`** — a Vite + React app embedding the real tldraw SDK (`src/App.tsx`).
   On first load it seeds one tldraw **page per doc**, built programmatically from
-  it, so the box-and-arrow diagram and the prose stay in sync. The six
+  it, so the box-and-arrow diagram and the prose stay in sync. The seven
   single-system pages get a Requirements panel (functional / non-functional); the
   six comparison/reference pages get a "Key Concepts" panel instead (per-topic
   bullet notes — requirements framing doesn't fit a technology comparison). Every
@@ -42,6 +42,7 @@ Currently covered:
 - **Consistent Hashing** — why modulo hashing breaks on resize, and how the hash ring bounds the damage
 - **Sharding** — range-based vs. hash-based vs. directory-based data distribution, side by side
 - **Distributed Rate Limiter** — API Gateway + sharded Token Bucket in Redis, consistent-hashed, fail-closed
+- **Uber** — fare estimation, geospatial driver matching, distributed-locked driver assignment, queued peak-demand handling
 
 Repo: [github.com/ChaitanyaPandit1998/system-design](https://github.com/ChaitanyaPandit1998/system-design)
 
